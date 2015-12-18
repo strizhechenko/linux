@@ -122,9 +122,9 @@ void nf_reject_ip6_tcphdr_put(struct sk_buff *nskb,
 	tcph->check = 0;
 
 	/* Adjust TCP checksum */
-	tcph->check = csum_ipv6_magic(&ipv6_hdr(nskb)->saddr,
+	tcph->check = tcp_v6_check(sizeof(struct tcphdr),
+				      &ipv6_hdr(nskb)->saddr,
 				      &ipv6_hdr(nskb)->daddr,
-				      sizeof(struct tcphdr), IPPROTO_TCP,
 				      csum_partial(tcph,
 						   sizeof(struct tcphdr), 0));
 }
